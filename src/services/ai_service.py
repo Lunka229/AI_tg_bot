@@ -1,2 +1,13 @@
+import ollama
+
 async def get_ai_response(message: str) -> str:
-    return f"Вы написали: \n\n {message}"
+    response = ollama.chat(
+        model = "qwen3:4b",
+        messages =[
+            {
+                "role":"user",
+                "content":message
+            }
+        ]
+    )
+    return response["message"]["content"]
