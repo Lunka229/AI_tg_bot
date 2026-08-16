@@ -1,6 +1,8 @@
 from aiogram import Router
 from aiogram.filters import CommandStart
 from aiogram.types import Message
+from src.services.ai_service import get_ai_response
+
 
 router = Router()
 
@@ -13,6 +15,9 @@ async def start_handler(message: Message):
 
 @router.message()
 async def message_handler(message: Message):
-    await message.answer(
-        f'Вы написали:\n\n{message.text}'
-    )
+    if not message.text:
+        return
+    
+    response = await get_ai_response(message.text)    
+
+    await message.answer(response)
