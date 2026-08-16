@@ -1,13 +1,5 @@
-import ollama
+from src.services.ollama_client import generate_response
 
 async def get_ai_response(message: str) -> str:
-    response = ollama.chat(
-        model = "qwen3:4b",
-        messages =[
-            {
-                "role":"user",
-                "content":message
-            }
-        ]
-    )
-    return response["message"]["content"]
+    response = await generate_response(message)
+    return response
